@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Friendship Day — Weave the Thread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1B3A;
+    --bg2:#241F4D;
+    --card:#2C2660;
+    --coral:#FF6B5B;
+    --sun:#FFC93C;
+    --teal:#3FBFAD;
+    --cream:#FFF3E2;
+    --muted:#C9C2E8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,201,60,0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(63,191,173,0.10), transparent),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+
+  /* thread divider motif */
+  .thread{
+    height:14px;
+    display:flex;
+    align-items:center;
+    gap:0;
+    margin:0 auto;
+    max-width:760px;
+  }
+  .thread span{flex:1; height:3px; border-radius:3px;}
+  .thread span:nth-child(1){background:var(--coral);}
+  .thread span:nth-child(2){background:var(--sun);}
+  .thread span:nth-child(3){background:var(--teal);}
+
+  header.hero{padding:64px 0 40px; text-align:center;}
+  .eyebrow{
+    font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:18px; font-weight:500;
+  }
+  .eyebrow::before{content:"◆ "; color:var(--sun);}
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.1rem, 6vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:italic; font-weight:500; color:var(--sun);}
+  .sub{
+    color:var(--muted);
+    font-size:17px; line-height:1.6;
+    max-width:480px; margin:0 auto 40px;
+  }
+
+  /* the loom / input */
+  .loom{
+    max-width:460px; margin:0 auto;
+    background:var(--card);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.5);
+  }
+  .loom label{
+    display:block; font-size:13px; color:var(--muted);
+    margin-bottom:10px; text-align:left; font-weight:500;
+  }
+  .input-row{display:flex; gap:10px;}
+  #nameInput{
+    flex:1;
+    background:var(--bg2);
+    border:1.5px solid rgba(255,255,255,0.12);
+    color:var(--cream);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:16px;
+    padding:13px 16px;
+    border-radius:11px;
+    outline:none;
+    transition:border-color .2s;
+  }
+  #nameInput:focus{border-color:var(--sun);}
+  #nameInput::placeholder{color:#8b84b8;}
+  #weaveBtn{
+    background:var(--coral);
+    color:#1B1B3A;
+    border:none;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:0 22px;
+    border-radius:11px;
+    cursor:pointer;
+    transition:transform .15s, background .2s;
+    white-space:nowrap;
+  }
+  #weaveBtn:hover{background:var(--sun); transform:translateY(-1px);}
+  #weaveBtn:active{transform:translateY(0);}
+  .hint{font-size:12px; color:#7d76a8; margin-top:12px;}
+
+  /* bracelet render */
+  #bracelet{
+    display:flex; justify-content:center; flex-wrap:wrap; gap:6px;
+    margin:22px 0 6px; min-height:0;
+  }
+  .bead{
+    width:0; height:0; opacity:0;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:0;
+    color:#1B1B3A;
+    animation:beadIn .45s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes beadIn{
+    to{width:38px; height:38px; opacity:1; font-size:16px;}
+  }
+
+  main{display:none;}
+  main.show{display:block; animation:fadeUp .6s ease both;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);}}
+
+  section{padding:52px 0;}
+  .kicker{
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:12px; font-weight:600;
+  }
+  h2{
+    font-family:'Fraunces', serif; font-weight:600;
+    font-size:clamp(1.5rem, 4vw, 2rem);
+    margin:0 0 20px; line-height:1.2;
+  }
+
+  /* wish letter */
+  .letter{
+    background:var(--card);
+    border-radius:18px;
+    padding:34px 30px;
+    border-left:4px solid var(--coral);
+    font-size:16.5px; line-height:1.75;
+    color:#EDE7FF;
+  }
+  .letter .sign{
+    font-family:'Caveat', cursive;
+    font-size:28px; color:var(--sun); margin-top:18px; display:block;
+  }
+
+  /* certificate */
+  .cert{
+    background:linear-gradient(160deg, var(--card), var(--bg2));
+    border:1px dashed rgba(255,201,60,0.4);
+    border-radius:18px;
+    padding:32px;
+    position:relative;
+  }
+  .cert::before{
+    content:"✦";
+    position:absolute; top:16px; right:20px;
+    color:var(--sun); font-size:20px;
+  }
+  .cert-title{font-family:'Fraunces', serif; font-style:italic; font-size:22px; margin-bottom:4px;}
+  .cert-name{font-size:26px; font-weight:700; color:var(--sun); margin-bottom:22px; font-family:'Fraunces', serif;}
+  .stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:520px){.stat-grid{grid-template-columns:1fr;}}
+  .stat .num{font-size:24px; font-weight:700; color:var(--teal);}
+  .stat .lbl{font-size:13px; color:var(--muted); margin-top:2px;}
+
+  /* superpower */
+  .power-card{
+    display:flex; gap:18px; align-items:flex-start;
+    background:var(--card); border-radius:18px; padding:28px;
+  }
+  .power-icon{
+    font-size:34px; flex-shrink:0;
+    background:var(--bg2); width:64px; height:64px;
+    border-radius:14px; display:flex; align-items:center; justify-content:center;
+  }
+  .power-title{font-weight:700; font-size:18px; margin-bottom:6px; color:var(--sun);}
+  .power-desc{color:var(--muted); font-size:15px; line-height:1.6;}
+
+  /* mixtape */
+  .tape{background:var(--card); border-radius:18px; padding:8px;}
+  .track{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 18px; border-radius:12px;
+    transition:background .15s;
+  }
+  .track:hover{background:var(--bg2);}
+  .track-num{
+    font-family:'Fraunces', serif; font-style:italic; color:var(--coral);
+    width:24px; font-size:16px;
+  }
+  .track-name{font-weight:500;}
+
+  /* actions */
+  .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;}
+  .btn{
+    border:1.5px solid rgba(255,255,255,0.15);
+    background:transparent; color:var(--cream);
+    padding:12px 20px; border-radius:11px; cursor:pointer;
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+    transition:border-color .2s, background .2s;
+  }
+  .btn:hover{border-color:var(--sun); background:rgba(255,201,60,0.08);}
+  .btn.primary{background:var(--teal); border-color:var(--teal); color:#0f2925;}
+  .btn.primary:hover{background:#57d6c4;}
+
+  footer{
+    text-align:center; padding:60px 24px 50px;
+    color:var(--muted); font-size:14px;
+  }
+  footer .note{
+    font-family:'Caveat', cursive; font-size:26px;
+    color:var(--sun); margin-top:6px; display:block;
+  }
+  footer .credit{margin-top:22px; font-size:12.5px; color:#726b9e;}
+
+  #confettiCanvas{position:fixed; inset:0; pointer-events:none; z-index:50;}
+</style>
+</head>
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">First Sunday of August · Friendship Day</p>
+    <h1>Every friendship is a thread<br><em>someone has to tie first.</em></h1>
+    <p class="sub">Type a name — yours, or the friend you're thinking of — and let's weave something for them.</p>
+
+    <div class="loom">
+      <label for="nameInput">Whose thread are we weaving?</label>
+      <div class="input-row">
+        <input id="nameInput" type="text" placeholder="e.g. Priya" maxlength="18" autocomplete="off">
+        <button id="weaveBtn">Weave it in</button>
+      </div>
+      <div id="bracelet"></div>
+      <p class="hint">Every name weaves a slightly different thread — try a few.</p>
+    </div>
+  </div>
+</header>
+
+<div class="thread"><span></span><span></span><span></span></div>
+
+<main id="main">
+
+  <section>
+    <div class="wrap">
+      <p class="kicker">a letter</p>
+      <h2>Dear <span id="nm1">friend</span>,</h2>
+      <div class="letter" id="letterBox"></div>
+    </div>
+  </section>
+
+  <div class="thread"><span></span><span></span><span></span></div>
+
+  <section>
+    <div class="wrap">
+      <p class="kicker">official-ish paperwork</p>
+      <h2>Certificate of Friendship</h2>
+      <div class="cert">
+        <p class="cert-title">This is to certify that</p>
+        <p class="cert-name" id="certName">—</p>
+        <div class="stat-grid" id="statGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="thread"><span></span><span></span><span></span></div>
+
+  <section>
+    <div class="wrap">
+      <p class="kicker">superpower unlocked</p>
+      <h2>Your friendship superpower</h2>
+      <div class="power-card">
+        <div class="power-icon" id="powerIcon">✨</div>
+        <div>
+          <div class="power-title" id="powerTitle"></div>
+          <div class="power-desc" id="powerDesc"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="thread"><span></span><span></span><span></span></div>
+
+  <section>
+    <div class="wrap">
+      <p class="kicker">side b</p>
+      <h2>A mixtape, if we made one</h2>
+      <div class="tape" id="tape"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="actions">
+        <button class="btn primary" id="copyBtn">Copy this wish</button>
+        <button class="btn" id="againBtn">Weave a new name</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>Happy Friendship Day. Go tell someone the quiet, obvious thing.</div>
+  <span class="note">— woven with way too much chai by Aashish pndtt 🧵☕</span>
+  <div class="credit">no bots were harmed in the making of this bracelet.</div>
+</footer>
+
+<script>
+(function(){
+  const nameInput = document.getElementById('nameInput');
+  const weaveBtn = document.getElementById('weaveBtn');
+  const braceletEl = document.getElementById('bracelet');
+  const main = document.getElementById('main');
+
+  const colors = ['#FF6B5B','#FFC93C','#3FBFAD','#EDE7FF','#FF9F7A'];
+
+  // deterministic hash -> seeded PRNG so the same name always gets the same "fate"
+  function hashStr(s){
+    let h = 2166136261;
+    for(let i=0;i<s.length;i++){
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function pick(rand, arr){ return arr[Math.floor(rand()*arr.length)]; }
+  function pickN(rand, arr, n){
+    const copy = arr.slice(); const out=[];
+    for(let i=0;i<n && copy.length;i++){
+      out.push(copy.splice(Math.floor(rand()*copy.length),1)[0]);
+    }
+    return out;
+  }
+
+  const openers = [
+    "I don't say this enough, so let's pretend today is a good excuse.",
+    "This is the part where I get slightly sappy, so bear with me.",
+    "Consider this your one (1) allowed dose of sincerity from me this year.",
+    "Fair warning — this is going to sound like a greeting card. I'm okay with that today."
+  ];
+  const middles = [
+    "You've got a talent for showing up on the exact days it matters and forgetting it on the days it doesn't. I've noticed. I appreciate it more than the group chat lets on.",
+    "Somewhere between the bad advice, the worse jokes, and the surprisingly solid life tips, you became the person I actually trust. Wasn't planning on that. Glad it happened anyway.",
+    "You remember the small, dumb, specific things — and that's the whole trick, isn't it? Nobody teaches that. You just do it.",
+    "Half the good memories I have involve you making a questionable decision and me going along with it anyway. No regrets. Mostly."
+  ];
+  const closers = [
+    "So — happy Friendship Day. Here's to more ordinary Tuesdays made better by you.",
+    "Anyway. Happy Friendship Day. Don't let it go to your head.",
+    "That's it, that's the letter. Happy Friendship Day, you menace.",
+    "Happy Friendship Day. May your snacks never run out and your wifi never lag mid-call."
+  ];
+
+  const superpowers = [
+    {icon:'📞', title:'The 2am Responder', desc:'Answers calls at hours no reasonable person should be awake for, and somehow still gives good advice.'},
+    {icon:'🎯', title:'The Truth-Teller', desc:'Will tell you your plan is bad before you spend money on it. Rare. Valuable. Occasionally annoying.'},
+    {icon:'🧠', title:'The Memory Keeper', desc:'Remembers the coffee order, the ex\'s name you\'d rather forget, and the joke from three years ago.'},
+    {icon:'🚗', title:'The Show-Upper', desc:'Shows up. Not virtually — actually, physically, inconveniently shows up. That\'s the whole superpower.'},
+    {icon:'🔥', title:'The Hype Machine', desc:'Turns your mediocre updates into main-character news. Every group chat needs one.'},
+    {icon:'🧭', title:'The Steady One', desc:'Distance, time zones, radio silence for a month — none of it seems to change much. Unreasonably reliable.'}
+  ];
+
+  const stats = [
+    ()=>({num: (Math.floor(1)*0+ (Math.random(),0)) , lbl:''}), // placeholder removed below
+  ];
+
+  const statPool = [
+    {lbl:'Inside jokes still unexplained to outsiders', range:[7,340]},
+    {lbl:'Times "I\'m 5 mins away" meant 25', range:[3,58]},
+    {lbl:'Playlists that are secretly about you', range:[1,12]},
+    {lbl:'Group chat messages that were just memes', range:[112,4821]},
+    {lbl:'Plans cancelled, replans made anyway', range:[2,44]},
+    {lbl:'Times you said "trust me" and were right', range:[9,91]}
+  ];
+
+  const songs = [
+    "the one from that car ride nobody agrees on",
+    "our unofficial anthem (never officially decided)",
+    "the song we both pretend to hate but know every word to",
+    "whatever's stuck in your head right now, probably",
+    "the one that plays when the plan falls apart and it's fine",
+    "the 1am 'just one more song' song",
+    "the one that means something and we've never said why",
+    "the closer — for when the night's winding down"
+  ];
+
+  function renderBracelet(name, rand){
+    braceletEl.innerHTML = '';
+    const letters = name.trim().split('');
+    letters.forEach((ch, i)=>{
+      const b = document.createElement('div');
+      b.className = 'bead';
+      b.style.background = colors[(hashStr(ch+i)) % colors.length];
+      b.style.animationDelay = (i*0.07)+'s';
+      b.textContent = ch.toUpperCase();
+      braceletEl.appendChild(b);
+    });
+  }
+
+  function confettiBurst(){
+    const canvas = document.getElementById('confettiCanvas');
+    canvas.width = innerWidth; canvas.height = innerHeight;
+    const ctx = canvas.getContext('2d');
+    const pieces = Array.from({length:80}, ()=>({
+      x: innerWidth/2 + (Math.random()-0.5)*200,
+      y: innerHeight*0.25,
+      vx: (Math.random()-0.5)*8,
+      vy: Math.random()*-6 - 4,
+      size: Math.random()*6+4,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360,
+      vr: (Math.random()-0.5)*10
+    }));
+    let frame = 0;
+    function tick(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      frame++;
+      let alive = false;
+      pieces.forEach(p=>{
+        p.vy += 0.25;
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        if(p.y < canvas.height+20) alive = true;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+        ctx.restore();
+      });
+      if(alive && frame < 200) requestAnimationFrame(tick);
+      else ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+    tick();
+  }
+
+  let lastWish = '';
+
+  function weave(){
+    let raw = nameInput.value.trim();
+    if(!raw) { nameInput.focus(); nameInput.style.borderColor = '#FF6B5B'; return; }
+    const name = raw.charAt(0).toUpperCase() + raw.slice(1);
+    const seed = hashStr(name.toLowerCase());
+    const rand = mulberry32(seed);
+
+    renderBracelet(name, rand);
+
+    // letter
+    document.getElementById('nm1').textContent = name;
+    const opener = pick(rand, openers);
+    const middle = pick(rand, middles);
+    const closer = pick(rand, closers);
+    document.getElementById('letterBox').innerHTML =
+      `<p>${opener}</p><p>${middle}</p><p>${closer}</p><span class="sign">— Aashish</span>`;
+
+    // certificate
+    document.getElementById('certName').textContent = name;
+    const chosenStats = pickN(rand, statPool, 4);
+    document.getElementById('statGrid').innerHTML = chosenStats.map(s=>{
+      const val = Math.floor(rand()*(s.range[1]-s.range[0])) + s.range[0];
+      return `<div class="stat"><div class="num">${val.toLocaleString()}</div><div class="lbl">${s.lbl}</div></div>`;
+    }).join('');
+
+    // superpower
+    const power = pick(rand, superpowers);
+    document.getElementById('powerIcon').textContent = power.icon;
+    document.getElementById('powerTitle').textContent = power.title;
+    document.getElementById('powerDesc').textContent = power.desc;
+
+    // mixtape
+    const picks = pickN(rand, songs, 4);
+    document.getElementById('tape').innerHTML = picks.map((s,i)=>
+      `<div class="track"><span class="track-num">0${i+1}</span><span class="track-name">${s}</span></div>`
+    ).join('');
+
+    lastWish = `Happy Friendship Day, ${name}! 🧵\n\n${opener} ${middle} ${closer}\n\nYour friendship superpower: ${power.title} — ${power.desc}\n\n— Woven by Aashish pndtt`;
+
+    main.classList.add('show');
+    confettiBurst();
+    setTimeout(()=> main.scrollIntoView({behavior:'smooth', block:'start'}), 350);
+  }
+
+  weaveBtn.addEventListener('click', weave);
+  nameInput.addEventListener('keydown', e=>{
+    if(e.key === 'Enter') weave();
+    nameInput.style.borderColor = '';
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(lastWish).then(()=>{
+      const btn = document.getElementById('copyBtn');
+      const old = btn.textContent;
+      btn.textContent = 'Copied ✓';
+      setTimeout(()=> btn.textContent = old, 1500);
+    });
+  });
+  document.getElementById('againBtn').addEventListener('click', ()=>{
+    main.classList.remove('show');
+    nameInput.value='';
+    braceletEl.innerHTML='';
+    window.scrollTo({top:0, behavior:'smooth'});
+    setTimeout(()=>nameInput.focus(), 400);
+  });
+})();
+</script>
+
+</body>
+</html>
